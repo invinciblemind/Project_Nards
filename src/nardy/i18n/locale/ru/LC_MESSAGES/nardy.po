@@ -1,0 +1,51 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: nardy 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-20 00:00+0000\n"
+"PO-Revision-Date: 2026-04-20 00:00+0000\n"
+"Last-Translator: Nardy Team\n"
+"Language: ru\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Nardy"
+msgstr "Нарды"
+
+msgid "Long backgammon"
+msgstr "Длинные нарды"
+
+msgid "Short backgammon"
+msgstr "Короткие нарды"
+
+msgid "New game"
+msgstr "Новая игра"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Exit"
+msgstr "Выход"
+
+msgid "Roll dice"
+msgstr "Бросить кости"
+
+msgid "Undo"
+msgstr "Отменить ход"
+
+msgid "Victory"
+msgstr "Победа"
+
+msgid "Back to menu"
+msgstr "Назад в меню"
+
+msgid "Current player"
+msgstr "Текущий игрок"
+
+msgid "Dice"
+msgstr "Кости"
+
+msgid "Game is in preparation."
+msgstr "Игровой экран находится в разработке."

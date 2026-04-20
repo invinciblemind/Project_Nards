@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.coverage
+.coverage.*
+.doit.db*
+.pytest_cache/
+.ruff_cache/
+.venv/
+.vscode/
+build/
+dist/
+docs/_build/
+htmlcov/
+pip-wheel-metadata/
+src/nardy/i18n/locale/**/*.mo
