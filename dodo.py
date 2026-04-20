@@ -80,6 +80,7 @@ def task_build() -> dict[str, object]:
             (_run, ("-m", "build")),
         ],
         "verbosity": 2,
+        "task_dep": ["babel_compile"],
     }
 
 
@@ -147,6 +148,7 @@ def task_babel_compile() -> dict[str, object]:
             ),
         ],
         "verbosity": 2,
+        "task_dep": ["babel_update"],
     }
 
 

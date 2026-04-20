@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import argparse
+from typing import TYPE_CHECKING
 
 from nardy import __version__
-from nardy.app.controller import AppController
-from nardy.domain.engine import build_default_engine
-from nardy.i18n import Localizer
-from nardy.ui.shell import ApplicationShell
+
+if TYPE_CHECKING:
+    from nardy.app.controller import AppController
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -33,6 +33,11 @@ def build_parser() -> argparse.ArgumentParser:
 
 def build_application(locale_code: str = "en") -> AppController:
     """Create the default application controller and its dependencies."""
+    from nardy.app.controller import AppController
+    from nardy.domain.engine import build_default_engine
+    from nardy.i18n import Localizer
+    from nardy.ui.shell import ApplicationShell
+
     shell = ApplicationShell()
     engine = build_default_engine()
     localizer = Localizer(locale_code=locale_code)

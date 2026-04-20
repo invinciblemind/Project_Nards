@@ -10,7 +10,7 @@ def test_gettext_noop_returns_same_message() -> None:
     assert gettext_noop("Nardy") == "Nardy"
 
 
-def test_localizer_falls_back_to_source_message_without_compiled_catalog() -> None:
-    """The localizer should gracefully fall back when no MO files are present."""
-    localizer = Localizer(locale_code="ru")
+def test_localizer_falls_back_to_source_message_for_unknown_locale() -> None:
+    """The localizer should gracefully fall back for an unknown locale."""
+    localizer = Localizer(locale_code="zz")
     assert localizer.gettext("Nardy") == "Nardy"

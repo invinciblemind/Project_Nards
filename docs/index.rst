@@ -8,5 +8,6 @@ Nardy Documentation
    :caption: Contents
 
    architecture
+   api
    developer_guide
    workflow

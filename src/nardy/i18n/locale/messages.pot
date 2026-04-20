@@ -1,113 +1,149 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: nardy 0.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 00:00+0000\n"
-"PO-Revision-Date: 2026-04-20 00:00+0000\n"
-"Last-Translator: Nardy Team\n"
-"Language-Team: Nardy Team\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-04-20 16:02+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
 
+#: src/nardy/app/controller.py:59
+msgid "Undo is unavailable."
+msgstr ""
+
+#: src/nardy/app/controller.py:108 src/nardy/app/controller.py:123
+#: src/nardy/app/presentation.py:59 src/nardy/ui/main_menu.py:34
 msgid "Nardy"
 msgstr ""
 
-msgid "Long backgammon"
-msgstr ""
-
-msgid "Short backgammon"
-msgstr ""
-
-msgid "New game"
-msgstr ""
-
-msgid "Settings"
-msgstr ""
-
-msgid "Exit"
-msgstr ""
-
-msgid "Roll dice"
-msgstr ""
-
-msgid "Undo"
-msgstr ""
-
+#: src/nardy/app/controller.py:143 src/nardy/app/presentation.py:86
 msgid "Victory"
 msgstr ""
 
-msgid "Back to menu"
-msgstr ""
-
-msgid "Current player"
-msgstr ""
-
-msgid "Mode"
-msgstr ""
-
-msgid "Turn phase"
-msgstr ""
-
-msgid "Dice"
-msgstr ""
-
-msgid "Choose a mode"
-msgstr ""
-
-msgid "Language"
-msgstr ""
-
-msgid "English"
-msgstr ""
-
-msgid "Russian"
-msgstr ""
-
-msgid "White"
-msgstr ""
-
-msgid "Black"
-msgstr ""
-
-msgid "Unknown player"
-msgstr ""
-
-msgid "Waiting for roll"
-msgstr ""
-
-msgid "Ready to move"
-msgstr ""
-
-msgid "Turn complete"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "Available moves"
-msgstr ""
-
-msgid "Board snapshot"
-msgstr ""
-
+#: src/nardy/app/presentation.py:51
 msgid "No legal moves yet."
 msgstr ""
 
+#: src/nardy/app/presentation.py:56
 msgid "Board is empty."
 msgstr ""
 
-msgid "Roll the dice to begin the turn."
+#: src/nardy/app/presentation.py:61 src/nardy/ui/main_menu.py:45
+msgid "Mode"
 msgstr ""
 
-msgid "Select a legal move once board interaction is implemented."
+#: src/nardy/app/presentation.py:65
+msgid "Current player"
 msgstr ""
 
-msgid "Turn is complete."
+#: src/nardy/app/presentation.py:69
+msgid "Turn phase"
 msgstr ""
 
+#: src/nardy/app/presentation.py:72
+msgid "Dice"
+msgstr ""
+
+#: src/nardy/app/presentation.py:87
+#, python-brace-format
 msgid "{player} wins."
 msgstr ""
 
-msgid "Undo is unavailable."
+#: src/nardy/app/presentation.py:116 src/nardy/ui/main_menu.py:50
+msgid "Long backgammon"
 msgstr ""
+
+#: src/nardy/app/presentation.py:116 src/nardy/ui/main_menu.py:55
+msgid "Short backgammon"
+msgstr ""
+
+#: src/nardy/app/presentation.py:122
+msgid "White"
+msgstr ""
+
+#: src/nardy/app/presentation.py:124
+msgid "Black"
+msgstr ""
+
+#: src/nardy/app/presentation.py:125
+msgid "Unknown player"
+msgstr ""
+
+#: src/nardy/app/presentation.py:131
+msgid "Waiting for roll"
+msgstr ""
+
+#: src/nardy/app/presentation.py:133
+msgid "Ready to move"
+msgstr ""
+
+#: src/nardy/app/presentation.py:134
+msgid "Turn complete"
+msgstr ""
+
+#: src/nardy/app/presentation.py:140
+msgid "Roll the dice to begin the turn."
+msgstr ""
+
+#: src/nardy/app/presentation.py:142
+msgid "Select a legal move once board interaction is implemented."
+msgstr ""
+
+#: src/nardy/app/presentation.py:143
+msgid "Turn is complete."
+msgstr ""
+
+#: src/nardy/ui/game_screen.py:39
+msgid "Status"
+msgstr ""
+
+#: src/nardy/ui/game_screen.py:59
+msgid "Available moves"
+msgstr ""
+
+#: src/nardy/ui/game_screen.py:72
+msgid "Board snapshot"
+msgstr ""
+
+#: src/nardy/ui/game_screen.py:98
+msgid "Roll dice"
+msgstr ""
+
+#: src/nardy/ui/game_screen.py:104
+msgid "Undo"
+msgstr ""
+
+#: src/nardy/ui/game_screen.py:110 src/nardy/ui/victory_screen.py:44
+msgid "Back to menu"
+msgstr ""
+
+#: src/nardy/ui/main_menu.py:41
+msgid "Choose a mode"
+msgstr ""
+
+#: src/nardy/ui/main_menu.py:61
+msgid "Language"
+msgstr ""
+
+#: src/nardy/ui/main_menu.py:68
+msgid "English"
+msgstr ""
+
+#: src/nardy/ui/main_menu.py:73
+msgid "Russian"
+msgstr ""
+
+#: src/nardy/ui/main_menu.py:79
+msgid "Exit"
+msgstr ""
+

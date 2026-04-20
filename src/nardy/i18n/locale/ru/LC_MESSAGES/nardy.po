@@ -1,114 +1,153 @@
+
 msgid ""
 msgstr ""
 "Project-Id-Version: nardy 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 00:00+0000\n"
+"POT-Creation-Date: 2026-04-20 16:02+0300\n"
 "PO-Revision-Date: 2026-04-20 00:00+0000\n"
 "Last-Translator: Nardy Team\n"
 "Language: ru\n"
 "Language-Team: Russian\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
 
+#: src/nardy/app/controller.py:59
+msgid "Undo is unavailable."
+msgstr "Отмена сейчас недоступна."
+
+#: src/nardy/app/controller.py:108 src/nardy/app/controller.py:123
+#: src/nardy/app/presentation.py:59 src/nardy/ui/main_menu.py:34
 msgid "Nardy"
 msgstr "Нарды"
 
-msgid "Long backgammon"
-msgstr "Длинные нарды"
-
-msgid "Short backgammon"
-msgstr "Короткие нарды"
-
-msgid "New game"
-msgstr "Новая игра"
-
-msgid "Settings"
-msgstr "Настройки"
-
-msgid "Exit"
-msgstr "Выход"
-
-msgid "Roll dice"
-msgstr "Бросить кости"
-
-msgid "Undo"
-msgstr "Отменить ход"
-
+#: src/nardy/app/controller.py:143 src/nardy/app/presentation.py:86
 msgid "Victory"
 msgstr "Победа"
 
-msgid "Back to menu"
-msgstr "Назад в меню"
-
-msgid "Current player"
-msgstr "Текущий игрок"
-
-msgid "Mode"
-msgstr "Режим"
-
-msgid "Turn phase"
-msgstr "Фаза хода"
-
-msgid "Dice"
-msgstr "Кости"
-
-msgid "Choose a mode"
-msgstr "Выберите режим"
-
-msgid "Language"
-msgstr "Язык"
-
-msgid "English"
-msgstr "Английский"
-
-msgid "Russian"
-msgstr "Русский"
-
-msgid "White"
-msgstr "Белые"
-
-msgid "Black"
-msgstr "Чёрные"
-
-msgid "Unknown player"
-msgstr "Неизвестный игрок"
-
-msgid "Waiting for roll"
-msgstr "Ожидание броска"
-
-msgid "Ready to move"
-msgstr "Ход готов"
-
-msgid "Turn complete"
-msgstr "Ход завершён"
-
-msgid "Status"
-msgstr "Статус"
-
-msgid "Available moves"
-msgstr "Доступные ходы"
-
-msgid "Board snapshot"
-msgstr "Снимок доски"
-
+#: src/nardy/app/presentation.py:51
 msgid "No legal moves yet."
 msgstr "Допустимых ходов пока нет."
 
+#: src/nardy/app/presentation.py:56
 msgid "Board is empty."
 msgstr "Доска пуста."
 
-msgid "Roll the dice to begin the turn."
-msgstr "Бросьте кости, чтобы начать ход."
+#: src/nardy/app/presentation.py:61 src/nardy/ui/main_menu.py:45
+msgid "Mode"
+msgstr "Режим"
 
-msgid "Select a legal move once board interaction is implemented."
-msgstr "Выберите допустимый ход после добавления интерактивной доски."
+#: src/nardy/app/presentation.py:65
+msgid "Current player"
+msgstr "Текущий игрок"
 
-msgid "Turn is complete."
-msgstr "Ход завершён."
+#: src/nardy/app/presentation.py:69
+msgid "Turn phase"
+msgstr "Фаза хода"
 
+#: src/nardy/app/presentation.py:72
+msgid "Dice"
+msgstr "Кости"
+
+#: src/nardy/app/presentation.py:87
+#, python-brace-format
 msgid "{player} wins."
 msgstr "{player} побеждает."
 
-msgid "Undo is unavailable."
-msgstr "Отмена сейчас недоступна."
+#: src/nardy/app/presentation.py:116 src/nardy/ui/main_menu.py:50
+msgid "Long backgammon"
+msgstr "Длинные нарды"
+
+#: src/nardy/app/presentation.py:116 src/nardy/ui/main_menu.py:55
+msgid "Short backgammon"
+msgstr "Короткие нарды"
+
+#: src/nardy/app/presentation.py:122
+msgid "White"
+msgstr "Белые"
+
+#: src/nardy/app/presentation.py:124
+msgid "Black"
+msgstr "Чёрные"
+
+#: src/nardy/app/presentation.py:125
+msgid "Unknown player"
+msgstr "Неизвестный игрок"
+
+#: src/nardy/app/presentation.py:131
+msgid "Waiting for roll"
+msgstr "Ожидание броска"
+
+#: src/nardy/app/presentation.py:133
+msgid "Ready to move"
+msgstr "Ход готов"
+
+#: src/nardy/app/presentation.py:134
+msgid "Turn complete"
+msgstr "Ход завершён"
+
+#: src/nardy/app/presentation.py:140
+msgid "Roll the dice to begin the turn."
+msgstr "Бросьте кости, чтобы начать ход."
+
+#: src/nardy/app/presentation.py:142
+msgid "Select a legal move once board interaction is implemented."
+msgstr "Выберите допустимый ход после добавления интерактивной доски."
+
+#: src/nardy/app/presentation.py:143
+msgid "Turn is complete."
+msgstr "Ход завершён."
+
+#: src/nardy/ui/game_screen.py:39
+msgid "Status"
+msgstr "Статус"
+
+#: src/nardy/ui/game_screen.py:59
+msgid "Available moves"
+msgstr "Доступные ходы"
+
+#: src/nardy/ui/game_screen.py:72
+msgid "Board snapshot"
+msgstr "Снимок доски"
+
+#: src/nardy/ui/game_screen.py:98
+msgid "Roll dice"
+msgstr "Бросить кости"
+
+#: src/nardy/ui/game_screen.py:104
+msgid "Undo"
+msgstr "Отменить ход"
+
+#: src/nardy/ui/game_screen.py:110 src/nardy/ui/victory_screen.py:44
+msgid "Back to menu"
+msgstr "Назад в меню"
+
+#: src/nardy/ui/main_menu.py:41
+msgid "Choose a mode"
+msgstr "Выберите режим"
+
+#: src/nardy/ui/main_menu.py:61
+msgid "Language"
+msgstr "Язык"
+
+#: src/nardy/ui/main_menu.py:68
+msgid "English"
+msgstr "Английский"
+
+#: src/nardy/ui/main_menu.py:73
+msgid "Russian"
+msgstr "Русский"
+
+#: src/nardy/ui/main_menu.py:79
+msgid "Exit"
+msgstr "Выход"
+
+#~ msgid "New game"
+#~ msgstr "Новая игра"
+
+#~ msgid "Settings"
+#~ msgstr "Настройки"
+
