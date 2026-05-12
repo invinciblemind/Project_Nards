@@ -177,7 +177,7 @@ class GameScreen(ttk.Frame):
             )
 
         if self._state.mode is GameMode.SHORT:
-            bar_x1, _, bar_x2, _ = self._bar_zone_rect()
+            bar_x1, _bar_y1, bar_x2, _bar_y2 = self._bar_zone_rect()
             self._canvas.create_rectangle(
                 bar_x1,
                 16,
@@ -288,7 +288,7 @@ class GameScreen(ttk.Frame):
             return
         if count <= 0:
             return
-        bar_x1, _, bar_x2, _ = self._bar_zone_rect()
+        bar_x1, _bar_y1, bar_x2, _bar_y2 = self._bar_zone_rect()
         center_x = (bar_x1 + bar_x2) / 2
         base_y = 70 if top else CANVAS_HEIGHT - 70
         step = CHECKER_SIZE + 2
@@ -662,7 +662,7 @@ class GameScreen(ttk.Frame):
     def _point_center(self, point: int, player: Player) -> tuple[float, float]:
         """Return animation center for source or target point."""
         if point == BAR_POSITION:
-            bar_x1, _, bar_x2, _ = self._bar_zone_rect()
+            bar_x1, _bar_y1, bar_x2, _bar_y2 = self._bar_zone_rect()
             return (
                 (bar_x1 + bar_x2) / 2,
                 TOP_Y if player is Player.WHITE else BOTTOM_Y,
