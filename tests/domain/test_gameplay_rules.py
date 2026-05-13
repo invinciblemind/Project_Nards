@@ -85,6 +85,54 @@ def test_long_mode_forbids_landing_on_enemy_point() -> None:
     assert 6 not in legal_targets
 
 
+def test_long_mode_black_moves_counterclockwise_from_head() -> None:
+    """Black checkers should move from point 12 toward point 11."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.BLACK,
+        layout={12: (Player.BLACK, 15)},
+        remaining_pips=(1,),
+    )
+
+    legal_moves = rules.legal_moves(state)
+
+    assert MoveTarget(source=12, target=11) in _move_targets(legal_moves)
+
+
+def test_long_mode_black_wraps_from_point_one_to_twenty_four() -> None:
+    """Black circular path should continue from point 1 to point 24."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.BLACK,
+        layout={1: (Player.BLACK, 1)},
+        remaining_pips=(1,),
+    )
+
+    legal_moves = rules.legal_moves(state)
+
+    assert MoveTarget(source=1, target=24) in _move_targets(legal_moves)
+
+
+def test_long_mode_black_home_and_bear_off_follow_counterclockwise_path() -> None:
+    """Black should bear off from points 13..18 after full circle."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.BLACK,
+        layout={18: (Player.BLACK, 1), 13: (Player.BLACK, 14)},
+        remaining_pips=(6,),
+    )
+
+    move = next(move for move in rules.legal_moves(state) if move.bears_off)
+    after = rules.apply_move(state, move)
+
+    assert set(rules.home_points_for(Player.BLACK)) == {13, 14, 15, 16, 17, 18}
+    assert move.source == 18
+    assert after.borne_off_for(Player.BLACK) == 1
+
+
 def test_bearing_off_is_available_when_all_checkers_are_home() -> None:
     """Bearing off should work once every checker is in the home board."""
     rules = LongNardyRules()
@@ -210,3 +258,16 @@ def _sequence_randint(values: list[int]):
         return next(iterator)
 
     return _randint
+
+
+class MoveTarget(tuple):
+    """Tiny comparable pair used to assert generated source/target points."""
+
+    def __new__(cls, source: int, target: int) -> MoveTarget:
+        """Create a source-target tuple."""
+        return super().__new__(cls, (source, target))
+
+
+def _move_targets(moves) -> set[MoveTarget]:
+    """Return source-target pairs for moves."""
+    return {MoveTarget(move.source, move.target) for move in moves}

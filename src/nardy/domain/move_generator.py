@@ -89,14 +89,13 @@ class MoveGenerator:
         if state.bar_for(player) > 0:
             return self._bar_reentry_moves(state, player, die_value)
 
-        direction = self._ruleset.direction_for(player)
         candidates: list[Move] = []
         for point_number in range(1, BOARD_POINT_COUNT + 1):
             point = state.point(point_number)
             if point.owner is not player or point.checkers == 0:
                 continue
-            target = point_number + direction * die_value
-            if 1 <= target <= BOARD_POINT_COUNT:
+            target = self._ruleset.target_for(player, point_number, die_value)
+            if target is not None:
                 if not self._ruleset.can_land_on_point(
                     state,
                     player,

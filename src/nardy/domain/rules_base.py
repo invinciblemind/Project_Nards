@@ -149,6 +149,13 @@ class BaseRuleset(Ruleset):
     def direction_for(self, player: Player) -> int:
         """Return movement direction for a player as ``-1`` or ``1``."""
 
+    def target_for(self, player: Player, source: int, die_value: int) -> int | None:
+        """Return target point or ``None`` when move leaves the board."""
+        target = source + self.direction_for(player) * die_value
+        if 1 <= target <= BOARD_POINT_COUNT:
+            return target
+        return None
+
     @abstractmethod
     def can_land_on_point(
         self,
@@ -172,8 +179,8 @@ class BaseRuleset(Ruleset):
             return False
         if source not in self.home_points_for(player):
             return False
-        target = source + self.direction_for(player) * die_value
-        if 1 <= target <= BOARD_POINT_COUNT:
+        target = self.target_for(player, source, die_value)
+        if target is not None:
             return False
         if self._is_exact_bear_off(player, source, die_value):
             return True
