@@ -4,17 +4,22 @@ from __future__ import annotations
 
 from dataclasses import replace
 
+import pytest
+
 from nardy.domain.engine import GameEngine
 from nardy.domain.models import (
     DiceRoll,
     GameMode,
     GameState,
+    Move,
+    OFF_POSITION,
     Player,
     PointState,
     TurnPhase,
     TurnState,
     build_board,
 )
+from nardy.domain.rules_base import RuleViolationError
 from nardy.domain.rules_long import LongNardyRules
 from nardy.domain.rules_short import ShortNardyRules
 
@@ -83,6 +88,177 @@ def test_long_mode_forbids_landing_on_enemy_point() -> None:
 
     legal_targets = {move.target for move in rules.legal_moves(state)}
     assert 6 not in legal_targets
+
+
+def test_rules_reject_wrong_mode_state() -> None:
+    """Ruleset should reject states created for another game mode."""
+    rules = LongNardyRules()
+    state = ShortNardyRules().initial_state()
+
+    with pytest.raises(RuleViolationError, match="does not match"):
+        rules.legal_moves(state)
+
+
+def test_rules_reject_starting_already_started_turn() -> None:
+    """A turn cannot be rolled twice."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={24: (Player.WHITE, 15)},
+        remaining_pips=(1,),
+    )
+
+    with pytest.raises(RuleViolationError, match="already started"):
+        rules.start_turn(state)
+
+
+def test_rules_reject_ending_unfinished_turn() -> None:
+    """A player cannot end a turn while moves remain unresolved."""
+    rules = LongNardyRules()
+    state = rules.initial_state()
+
+    with pytest.raises(RuleViolationError, match="cannot end"):
+        rules.end_turn(state)
+
+
+def test_rules_reject_inactive_player_move() -> None:
+    """Only the current player may move."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={24: (Player.WHITE, 15)},
+        remaining_pips=(1,),
+    )
+    move = Move(Player.BLACK, 12, 11, 1)
+
+    with pytest.raises(RuleViolationError, match="active player"):
+        rules.validate_move(state, move)
+
+
+def test_rules_reject_move_before_roll() -> None:
+    """Moves are forbidden before dice are rolled."""
+    rules = LongNardyRules()
+    state = rules.initial_state()
+    move = Move(Player.WHITE, 24, 23, 1)
+
+    with pytest.raises(RuleViolationError, match="after rolling"):
+        rules.validate_move(state, move)
+
+
+def test_rules_reject_move_not_in_current_legal_set() -> None:
+    """Move must match currently generated legal moves."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={24: (Player.WHITE, 15)},
+        remaining_pips=(1,),
+    )
+    move = Move(Player.WHITE, 24, 22, 2)
+
+    with pytest.raises(RuleViolationError, match="not legal"):
+        rules.validate_move(state, move)
+
+
+def test_rules_reject_relocation_from_empty_bar() -> None:
+    """Private relocation guard should reject missing bar checkers."""
+    rules = ShortNardyRules()
+    state = _ready_state(
+        mode=GameMode.SHORT,
+        player=Player.WHITE,
+        layout={24: (Player.WHITE, 1)},
+        remaining_pips=(1,),
+    )
+    move = Move(Player.WHITE, 0, 24, 1)
+
+    with pytest.raises(RuleViolationError, match="bar"):
+        rules._relocate_checker(state, move)
+
+
+def test_rules_reject_relocation_from_empty_point() -> None:
+    """Private relocation guard should reject empty source points."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={24: (Player.WHITE, 1)},
+        remaining_pips=(1,),
+    )
+    move = Move(Player.WHITE, 23, 22, 1)
+
+    with pytest.raises(RuleViolationError, match="source point"):
+        rules._relocate_checker(state, move)
+
+
+def test_rules_reject_capture_without_blot_permission() -> None:
+    """Relocation should not capture blocked enemy points."""
+    rules = ShortNardyRules()
+    state = _ready_state(
+        mode=GameMode.SHORT,
+        player=Player.WHITE,
+        layout={8: (Player.WHITE, 1), 6: (Player.BLACK, 2)},
+        remaining_pips=(2,),
+    )
+    move = Move(Player.WHITE, 8, 6, 2, captures=True)
+
+    with pytest.raises(RuleViolationError, match="blocked opposing"):
+        rules._relocate_checker(state, move)
+
+
+def test_short_rules_black_home_and_bear_off() -> None:
+    """Short black player should bear off toward point 25."""
+    rules = ShortNardyRules()
+    state = _ready_state(
+        mode=GameMode.SHORT,
+        player=Player.BLACK,
+        layout={19: (Player.BLACK, 1), 24: (Player.BLACK, 14)},
+        remaining_pips=(6,),
+    )
+
+    move = next(move for move in rules.legal_moves(state) if move.bears_off)
+    after = rules.apply_move(state, move)
+
+    assert move.source == 19
+    assert move.target == OFF_POSITION
+    assert after.borne_off_for(Player.BLACK) == 1
+
+
+def test_bear_off_requires_home_board_and_clear_bar() -> None:
+    """Bearing off should fail while bar or outside-home checkers remain."""
+    rules = LongNardyRules()
+    with_bar = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={6: (Player.WHITE, 15)},
+        remaining_pips=(6,),
+    )
+    with_bar = with_bar.with_bar(Player.WHITE, 1)
+    outside_home = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={8: (Player.WHITE, 1), 6: (Player.WHITE, 14)},
+        remaining_pips=(6,),
+    )
+
+    assert rules.can_bear_off_from(with_bar, Player.WHITE, 6, 6) is False
+    assert rules.can_bear_off_from(outside_home, Player.WHITE, 6, 6) is False
+    assert rules.can_bear_off_from(outside_home, Player.WHITE, 8, 6) is False
+
+
+def test_bear_off_overshoot_requires_farthest_home_checker() -> None:
+    """Overshoot is legal only from the farthest occupied home point."""
+    rules = LongNardyRules()
+    state = _ready_state(
+        mode=GameMode.LONG,
+        player=Player.WHITE,
+        layout={6: (Player.WHITE, 1), 1: (Player.WHITE, 14)},
+        remaining_pips=(6,),
+    )
+
+    assert rules.can_bear_off_from(state, Player.WHITE, 1, 6) is False
+    assert rules.can_bear_off_from(state, Player.WHITE, 6, 6) is True
 
 
 def test_long_mode_black_moves_counterclockwise_from_head() -> None:

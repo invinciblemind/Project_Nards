@@ -188,3 +188,57 @@ def test_build_application_join_mode_uses_remote_player(
 
     assert app.kwargs["controlled_player"] is Player.BLACK
     assert callable(app.kwargs["state_waiter"])
+
+
+def test_build_application_local_mode_uses_default_engine(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Local mode should construct shell, localizer and default engine."""
+
+    class DummyShell:
+        """Minimal shell placeholder."""
+
+    class DummyLocalizer:
+        """Capture locale selection."""
+
+        def __init__(self, locale_code: str = "en") -> None:
+            self.locale_code = locale_code
+
+    class DummyEngine:
+        """Minimal local engine placeholder."""
+
+    class DummyController:
+        """Capture constructor args from local mode."""
+
+        def __init__(self, **kwargs) -> None:
+            self.kwargs = kwargs
+
+    engine = DummyEngine()
+    monkeypatch.setattr("nardy.ui.shell.ApplicationShell", DummyShell)
+    monkeypatch.setattr("nardy.i18n.Localizer", DummyLocalizer)
+    monkeypatch.setattr("nardy.app.controller.AppController", DummyController)
+    monkeypatch.setattr(
+        "nardy.domain.engine.build_default_engine",
+        lambda: engine,
+    )
+
+    app = build_application(locale_code="ru")
+
+    assert isinstance(app.kwargs["shell"], DummyShell)
+    assert app.kwargs["engine"] is engine
+    assert app.kwargs["localizer"].locale_code == "ru"
+
+
+def test_main_reports_application_build_error(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Main should convert bootstrap errors into exit code 1."""
+
+    def _raise_error(**_kwargs):
+        raise RuntimeError("bad mode")
+
+    monkeypatch.setattr("nardy.app.bootstrap.build_application", _raise_error)
+
+    assert main([]) == 1
+    assert "bad mode" in capsys.readouterr().out
