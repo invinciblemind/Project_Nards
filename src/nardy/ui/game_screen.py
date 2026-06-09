@@ -275,7 +275,7 @@ class GameScreen(ttk.Frame):
         if count > max_visible:
             self._canvas.create_text(
                 center_x,
-                y1 + 18 if point >= 13 else y2 - 18,
+                y2 - 18 if point >= 13 else y1 + 18,
                 text=f"x{count}",
                 fill="#aa2e2e",
                 font=("Segoe UI", 9, "bold"),
